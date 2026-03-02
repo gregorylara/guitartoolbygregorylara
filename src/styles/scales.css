@@ -1,0 +1,263 @@
+/* ============================================
+   Scale Explorer Page Styles
+   ============================================ */
+
+/* ── Intro block ── */
+.scale-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  padding: var(--space-xl);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-2xl);
+}
+
+@media (max-width: 640px) {
+  .scale-intro {
+    grid-template-columns: 1fr;
+  }
+}
+
+.scale-intro__title {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.scale-intro__text p {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-sm);
+}
+
+.scale-intro__text strong {
+  color: var(--text-accent);
+  font-weight: var(--fw-semibold);
+}
+
+.scale-intro__legend {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-md);
+  padding-left: var(--space-xl);
+  border-left: 1px solid var(--border-subtle);
+}
+
+@media (max-width: 640px) {
+  .scale-intro__legend {
+    padding-left: 0;
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: var(--space-lg);
+  }
+}
+
+.scale-legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+.scale-legend-item--tip {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--accent-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-accent);
+  font-size: var(--fs-xs);
+}
+
+.scale-legend-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  font-size: 8px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.scale-legend-dot.root {
+  background: var(--accent-primary);
+  border: 2px solid #fff;
+}
+
+.scale-legend-dot.note {
+  background: var(--accent-subtle);
+  border: 2px solid var(--accent-primary);
+}
+
+/* ── Category nav ── */
+.scale-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.scale-nav-link {
+  padding: 0.4em 1em;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-default);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.scale-nav-link:hover {
+  border-color: var(--accent-primary);
+  color: var(--text-accent);
+  background: var(--accent-subtle);
+}
+
+/* ── Section ── */
+.scale-section {
+  margin-bottom: var(--space-3xl);
+  scroll-margin-top: calc(var(--header-height) + var(--space-lg));
+}
+
+.scale-section__header {
+  margin-bottom: var(--space-xl);
+}
+
+.scale-section__title {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.scale-section__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  max-width: 640px;
+  line-height: 1.65;
+}
+
+/* ── Cards grid ── */
+.scale-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-xl);
+}
+
+@media (max-width: 480px) {
+  .scale-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Scale card ── */
+.scale-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-xl);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  border-left: 3px solid var(--scale-color, var(--accent-primary));
+}
+
+.scale-card:hover {
+  border-color: var(--border-accent);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.scale-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.scale-card__name {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.scale-card__intervals {
+  font-size: var(--fs-xs);
+  color: var(--scale-color, var(--text-accent));
+  font-family: var(--font-mono);
+  letter-spacing: 0.03em;
+}
+
+.scale-card__tags {
+  flex-shrink: 0;
+}
+
+.scale-tag {
+  display: inline-block;
+  padding: 0.2em 0.6em;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  font-size: var(--fs-xs);
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.scale-card__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ── Fretboard diagram ── */
+.scale-card__diagram {
+  margin-top: var(--space-sm);
+}
+
+.scale-diagram-label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+  font-weight: var(--fw-medium);
+}
+
+.scale-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  padding: 4px;
+}
+
+/* ── Diagram legend ── */
+.scale-legend {
+  display: flex;
+  gap: var(--space-lg);
+  margin-top: var(--space-sm);
+}
+
+.scale-legend__root,
+.scale-legend__note {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.scale-legend__root {
+  color: var(--scale-color, var(--accent-primary));
+  font-weight: var(--fw-semibold);
+}

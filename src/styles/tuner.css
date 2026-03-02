@@ -1,0 +1,636 @@
+/* ============================================
+   Guitar Tuner — Tool Styles
+   ============================================ */
+
+.tuner-phase.hidden { display: none; }
+.page-header.hidden { display: none; }
+
+/* ============================================
+   Phase 1: Tuning Preset Selector
+   ============================================ */
+.tuning-presets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-lg);
+  width: 100%;
+  margin-top: var(--space-md);
+}
+
+.tuning-preset-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl) var(--space-lg);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-align: center;
+}
+
+.tuning-preset-card:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-surface);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+}
+
+.tuning-preset-card__icon { font-size: 2.5rem; line-height: 1; }
+.tuning-preset-card__name {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+}
+.tuning-preset-card__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+/* ============================================
+   Phase 2: Guided Tuning — Viewport Grid
+   ============================================ */
+.tuner-grid {
+  display: grid;
+  grid-template-columns: 260px 1fr 260px;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "topbar topbar topbar"
+    "left   center right";
+  gap: var(--space-md);
+  max-height: calc(100vh - 100px);
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+/* ── Top bar ── */
+.tuner-grid__topbar {
+  grid-area: topbar;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* ── Left Column ── */
+.tuner-grid__left {
+  grid-area: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-md);
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── Center Column ── */
+.tuner-grid__center {
+  grid-area: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── Right Column ── */
+.tuner-grid__right {
+  grid-area: right;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── Panel container ── */
+.tuner-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  flex: 1;
+  min-height: 0;
+}
+
+.tuner-panel__label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── Progress Bar ── */
+.tuner-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex: 1;
+  max-width: 320px;
+}
+
+.tuner-progress__text {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  font-weight: var(--fw-medium);
+  white-space: nowrap;
+}
+
+.tuner-progress__bar {
+  flex: 1;
+  height: 5px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.tuner-progress__fill {
+  height: 100%;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-slow);
+}
+
+/* ── Current Target ── */
+.tuner-target {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-md);
+  background: var(--accent-subtle);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.tuner-target__label {
+  font-size: var(--fs-xs);
+  color: var(--text-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: var(--fw-semibold);
+}
+
+.tuner-target__note {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+.tuner-target__string {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+/* ── Gauge ── */
+.tuner-gauge {
+  position: relative;
+  width: 320px;
+  height: 180px;
+  flex-shrink: 0;
+}
+
+.tuner-gauge__svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.tuner-gauge__needle {
+  transform-origin: 180px 180px;
+  transition: transform 120ms ease-out;
+}
+
+.tuner-gauge__needle line {
+  stroke: var(--text-primary);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.tuner-gauge__needle circle { fill: var(--text-primary); }
+
+.tuner-gauge[data-state="in-tune"] .tuner-gauge__needle line { stroke: #22cc66; }
+.tuner-gauge[data-state="in-tune"] .tuner-gauge__needle circle { fill: #22cc66; }
+.tuner-gauge[data-state="flat"] .tuner-gauge__needle line { stroke: #ff6644; }
+.tuner-gauge[data-state="flat"] .tuner-gauge__needle circle { fill: #ff6644; }
+.tuner-gauge[data-state="sharp"] .tuner-gauge__needle line { stroke: #ffaa22; }
+.tuner-gauge[data-state="sharp"] .tuner-gauge__needle circle { fill: #ffaa22; }
+
+/* ── Note Display ── */
+.tuner-note { text-align: center; }
+
+.tuner-note__name {
+  font-size: 4rem;
+  font-weight: var(--fw-bold);
+  line-height: 1;
+  color: var(--text-primary);
+  transition: color var(--transition-fast);
+  letter-spacing: -0.02em;
+}
+
+.tuner-note__name span {
+  font-size: 2rem;
+  color: var(--text-secondary);
+  vertical-align: super;
+}
+
+.tuner-note__freq {
+  font-size: var(--fs-base);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+
+/* ── Tuning State ── */
+.tuner-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  transition: all var(--transition-base);
+}
+
+.tuner-state[data-state="idle"] { background: var(--bg-surface); color: var(--text-muted); }
+.tuner-state[data-state="listening"] {
+  background: var(--accent-subtle);
+  color: var(--text-accent);
+  animation: pulse-border 2s ease-in-out infinite;
+}
+.tuner-state[data-state="in-tune"] { background: #22cc6620; color: #22cc66; box-shadow: 0 0 20px #22cc6630; }
+.tuner-state[data-state="flat"]    { background: #ff664420; color: #ff6644; }
+.tuner-state[data-state="sharp"]   { background: #ffaa2220; color: #ffaa22; }
+
+@keyframes pulse-border {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+  50%      { box-shadow: 0 0 12px 4px var(--accent-glow); }
+}
+
+/* ── Cents ── */
+.tuner-cents {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
+/* ── Guided String Steps ── */
+.tuner-strings-guided {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.tuner-string-step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  transition: all var(--transition-base);
+}
+
+.tuner-string-step__num {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  color: var(--text-muted);
+  background: var(--bg-surface);
+  flex-shrink: 0;
+}
+
+.tuner-string-step__note {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.tuner-string-step__note sub { font-size: 0.7em; }
+
+.tuner-string-step__freq {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* String states */
+.tuner-string-step.pending { opacity: 0.45; }
+
+.tuner-string-step.current {
+  border-color: var(--accent-primary);
+  background: var(--accent-subtle);
+  opacity: 1;
+  animation: pulse-string 2s ease-in-out infinite;
+}
+.tuner-string-step.current .tuner-string-step__num {
+  background: var(--accent-primary);
+  color: #fff;
+}
+.tuner-string-step.current .tuner-string-step__note { color: var(--text-accent); }
+
+@keyframes pulse-string {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+  50%      { box-shadow: 0 0 12px 2px var(--accent-glow); }
+}
+
+.tuner-string-step.tuned {
+  border-color: #22cc66;
+  background: #22cc6610;
+  opacity: 1;
+}
+.tuner-string-step.tuned .tuner-string-step__num {
+  background: #22cc66;
+  color: #fff;
+}
+.tuner-string-step.tuned .tuner-string-step__note { color: #22cc66; }
+
+/* ── Waveform Canvas ── */
+.tuner-waveform {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+/* ── Tuning Tips ── */
+.tuner-tips {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.tuner-tips__item {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  line-height: 1.4;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--bg-surface);
+  border-radius: var(--radius-sm);
+}
+
+/* ── WhatsApp Share Button ── */
+.tuner-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0.4em 1em;
+  border-radius: var(--radius-full);
+  background: #25D366;
+  color: #fff;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tuner-share-btn:hover {
+  background: #20bf5a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+}
+
+.tuner-share-btn--lg {
+  padding: 0.7em 1.8em;
+  font-size: var(--fs-base);
+}
+
+/* ============================================
+   Completion Modal
+   ============================================ */
+.tuner-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  animation: modal-fade-in 300ms ease both;
+}
+
+.tuner-modal-overlay.hidden { display: none; }
+
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.tuner-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  text-align: center;
+  padding: var(--space-3xl) var(--space-2xl);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg), 0 0 40px var(--accent-glow);
+  max-width: 440px;
+  width: 90%;
+  animation: modal-slide-up 400ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes modal-slide-up {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.tuner-modal__icon {
+  font-size: 4rem;
+  line-height: 1;
+  animation: celebrate 1s ease-in-out;
+}
+
+@keyframes celebrate {
+  0%   { transform: scale(0) rotate(-20deg); }
+  50%  { transform: scale(1.3) rotate(10deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+.tuner-modal__title {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  color: #22cc66;
+}
+
+.tuner-modal__desc {
+  font-size: var(--fs-base);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.tuner-modal__desc strong { color: var(--text-accent); }
+
+.tuner-modal__sub {
+  font-size: var(--fs-lg);
+  color: var(--text-primary);
+}
+
+.tuner-modal__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  width: 100%;
+}
+
+/* ── Section Label (legacy) ── */
+.tuner-section-label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  align-self: flex-start;
+}
+
+/* ============================================
+   Responsive — Tablet (2 columns)
+   ============================================ */
+@media (max-width: 900px) {
+  .tuner-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "topbar topbar"
+      "center center"
+      "left   right";
+  }
+
+  .tuner-gauge {
+    width: 260px;
+    height: 150px;
+  }
+
+  .tuner-note__name { font-size: 3rem; }
+}
+
+/* ============================================
+   Responsive — Mobile (single column)
+   ============================================ */
+@media (max-width: 600px) {
+  .tuner-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-height: none;
+    overflow: visible;
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+  }
+
+  /* Top bar: stack vertically */
+  .tuner-grid__topbar {
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .tuner-grid__topbar .btn { font-size: var(--fs-xs); padding: 0.3em 0.6em; }
+  .tuner-share-btn { font-size: var(--fs-xs); padding: 0.3em 0.8em; }
+
+  .tuner-progress {
+    order: -1;
+    width: 100%;
+    max-width: none;
+  }
+
+  /* Center column — compact gauge + note */
+  .tuner-grid__center {
+    align-items: center;
+    gap: 2px;
+    padding: var(--space-sm) 0;
+  }
+
+  .tuner-gauge {
+    width: 200px;
+    height: 120px;
+  }
+
+  .tuner-note__name { font-size: 2.5rem; }
+  .tuner-note__name span { font-size: 1.2rem; }
+  .tuner-note__freq { font-size: var(--fs-sm); }
+  .tuner-cents { font-size: var(--fs-base); }
+
+  /* State */
+  .tuner-state { font-size: var(--fs-xs); padding: var(--space-xs) var(--space-sm); }
+
+  /* Target */
+  .tuner-target { padding: var(--space-sm); }
+  .tuner-target__note { font-size: var(--fs-xl); }
+  .tuner-target__label { font-size: 0.6rem; }
+  .tuner-target__string { font-size: 0.65rem; }
+
+  /* Strings: horizontal compact chips */
+  .tuner-strings-guided {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-xs);
+  }
+
+  .tuner-string-step {
+    flex-direction: column;
+    width: auto;
+    min-width: 44px;
+    padding: var(--space-xs);
+    text-align: center;
+    gap: 2px;
+  }
+
+  .tuner-string-step__num { width: 22px; height: 22px; font-size: var(--fs-xs); }
+  .tuner-string-step__note { font-size: var(--fs-xs); }
+  .tuner-string-step__freq { display: none; }
+
+  /* Left column */
+  .tuner-grid__left {
+    justify-content: flex-start;
+    gap: var(--space-sm);
+  }
+
+  /* Waveform — smaller on mobile */
+  .tuner-waveform {
+    min-height: 60px;
+    max-height: 80px;
+  }
+
+  /* Tips — compact */
+  .tuner-tips__item {
+    font-size: 0.65rem;
+    padding: 4px var(--space-xs);
+  }
+
+  /* Panel labels */
+  .tuner-panel__label { font-size: 0.6rem; }
+}

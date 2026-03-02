@@ -1,0 +1,414 @@
+/* ============================================
+   Metronome Page Styles
+   ============================================ */
+
+.metro-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* ── Beat visualizer ── */
+.metro-visualizer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  min-height: 56px;
+}
+
+.metro-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 2px solid var(--border-default);
+  transition: background var(--transition-fast), border-color var(--transition-fast),
+              transform 80ms ease, box-shadow 80ms ease;
+}
+
+.metro-dot.accent {
+  border-color: var(--accent-primary);
+}
+
+.metro-dot.active {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 18px var(--accent-glow);
+  transform: scale(1.2);
+}
+
+.metro-dot.accent.active {
+  background: var(--accent-hover);
+  box-shadow: 0 0 28px var(--accent-primary);
+  transform: scale(1.35);
+}
+
+/* ── BPM display ── */
+.metro-bpm-block {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.metro-bpm-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.metro-bpm-input {
+  width: 140px;
+  text-align: center;
+  font-size: 4.5rem;
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-mono);
+  line-height: 1;
+  /* hide spinner arrows */
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.metro-bpm-input::-webkit-inner-spin-button,
+.metro-bpm-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.metro-bpm-label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.metro-adj-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-default);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.metro-adj-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--text-accent);
+  background: var(--accent-subtle);
+}
+
+.metro-adj-btn:active {
+  transform: scale(0.92);
+}
+
+/* ── Slider ── */
+.metro-slider-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  max-width: 480px;
+}
+
+.metro-slider-label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  min-width: 28px;
+  text-align: center;
+}
+
+.metro-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  outline: none;
+  cursor: pointer;
+}
+
+.metro-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  box-shadow: 0 0 6px var(--accent-glow);
+  cursor: grab;
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.metro-slider::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.2);
+  box-shadow: 0 0 14px var(--accent-primary);
+}
+
+.metro-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  cursor: grab;
+}
+
+/* ── Play / Stop + Tap row ── */
+.metro-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  width: 100%;
+}
+
+/* Play button */
+.metro-play-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px var(--accent-glow);
+  transition: transform var(--transition-spring), box-shadow var(--transition-base);
+  position: relative;
+}
+
+.metro-play-btn::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-primary);
+  opacity: 0;
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.metro-play-btn.playing::after {
+  opacity: 1;
+  transform: scale(1.1);
+  animation: metro-ring 1s ease infinite;
+}
+
+@keyframes metro-ring {
+  0%, 100% { transform: scale(1.05); opacity: 0.7; }
+  50%       { transform: scale(1.18); opacity: 0.2; }
+}
+
+.metro-play-btn:hover {
+  transform: scale(1.07);
+  box-shadow: 0 6px 30px var(--accent-primary);
+}
+
+.metro-play-btn:active {
+  transform: scale(0.95);
+}
+
+.metro-play-icon {
+  width: 28px;
+  height: 28px;
+  color: #fff;
+}
+
+/* Tap button */
+.metro-tap-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border-default);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  cursor: pointer;
+  gap: 2px;
+  transition: all var(--transition-fast);
+}
+
+.metro-tap-btn span {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+}
+
+.metro-tap-btn small {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.metro-tap-btn:hover {
+  border-color: var(--accent-primary);
+  background: var(--accent-subtle);
+  color: var(--text-accent);
+}
+
+.metro-tap-btn:active {
+  transform: scale(0.93);
+  background: var(--accent-glow);
+}
+
+/* Volume */
+.metro-volume-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.metro-vol-icon {
+  font-size: var(--fs-base);
+}
+
+.metro-vol-slider {
+  width: 90px;
+  flex: none;
+}
+
+/* ── Section containers ── */
+.metro-section {
+  width: 100%;
+}
+
+.metro-section__label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-sm);
+}
+
+.metro-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.metro-chip {
+  padding: 0.4em 1em;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-default);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.metro-chip:hover {
+  border-color: var(--accent-primary);
+  color: var(--text-accent);
+  background: var(--accent-subtle);
+}
+
+.metro-chip.active {
+  background: var(--accent-gradient);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Presets grid ── */
+.metro-presets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--space-sm);
+}
+
+.metro-preset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: var(--space-md) var(--space-sm);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.metro-preset:hover {
+  border-color: var(--border-accent);
+  background: var(--accent-subtle);
+  transform: translateY(-2px);
+}
+
+.metro-preset.active {
+  border-color: var(--accent-primary);
+  background: var(--accent-subtle);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.metro-preset__name {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+}
+
+.metro-preset__bpm {
+  font-size: var(--fs-xs);
+  color: var(--text-accent);
+  font-family: var(--font-mono);
+}
+
+/* ── kbd styling ── */
+kbd {
+  display: inline-block;
+  padding: 0.1em 0.45em;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  font-size: 0.8em;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+}
+
+/* ── Mobile ── */
+@media (max-width: 560px) {
+  .metro-bpm-input {
+    font-size: 3.5rem;
+    width: 110px;
+  }
+
+  .metro-play-btn {
+    width: 68px;
+    height: 68px;
+  }
+
+  .metro-tap-btn {
+    width: 58px;
+    height: 58px;
+  }
+
+  .metro-vol-slider {
+    width: 70px;
+  }
+
+  .metro-presets-grid {
+    grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+  }
+}

@@ -48,6 +48,10 @@ export class Router {
       item.classList.toggle('active', href === hash);
     });
 
+    // Close mobile sidebar on navigation
+    document.querySelector('.app-sidebar')?.classList.remove('open');
+    document.querySelector('.sidebar-overlay')?.classList.remove('active');
+
     // Dispatch custom event
     window.dispatchEvent(new CustomEvent('routechange', { detail: { route: hash } }));
   }

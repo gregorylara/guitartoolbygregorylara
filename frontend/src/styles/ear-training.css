@@ -1,0 +1,104 @@
+/* ============================================
+   Ear Training — PRO Feature Styles
+   ============================================ */
+
+.ear-layout {
+  display: flex; flex-direction: column;
+  gap: var(--space-2xl); max-width: 640px;
+}
+
+.ear-controls {
+  display: flex; flex-wrap: wrap; gap: var(--space-xl);
+  padding: var(--space-xl);
+  background: var(--bg-elevated); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+.ear-control-group {
+  display: flex; flex-direction: column; gap: var(--space-sm);
+}
+.ear-control-group label {
+  font-size: var(--fs-xs); font-weight: var(--fw-medium);
+  color: var(--text-secondary); text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.ear-mode-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.ear-mode-btn {
+  padding: 0.4em 0.9em; font-size: var(--fs-xs);
+  background: var(--bg-surface); border: 1px solid var(--border-default);
+  border-radius: var(--radius-full); color: var(--text-secondary);
+  cursor: pointer; transition: all var(--transition-fast);
+}
+.ear-mode-btn.active {
+  background: var(--accent-gradient); color: #fff;
+  border-color: transparent;
+}
+
+/* Stats */
+.ear-stats {
+  display: flex; gap: var(--space-xl); justify-content: center;
+}
+.ear-stat {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  font-size: var(--fs-xs); color: var(--text-muted);
+}
+.ear-stat__val {
+  font-size: var(--fs-2xl); font-weight: var(--fw-bold);
+  color: var(--text-primary);
+}
+
+/* Question area */
+.ear-question {
+  display: flex; flex-direction: column;
+  align-items: center; gap: var(--space-lg);
+}
+.ear-play-btn {
+  padding: 0.8em 2.5em; font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  background: var(--accent-gradient); border: none;
+  border-radius: var(--radius-full); color: #fff;
+  cursor: pointer; transition: all var(--transition-fast);
+}
+.ear-play-btn:hover { opacity: 0.88; transform: scale(1.03); }
+
+.ear-feedback { min-height: 28px; text-align: center; }
+.ear-correct {
+  color: #22c55e; font-weight: var(--fw-bold);
+  font-size: var(--fs-md); animation: ear-pop 0.3s ease;
+}
+.ear-wrong {
+  color: #ff6b6b; font-weight: var(--fw-bold);
+  font-size: var(--fs-md); animation: ear-pop 0.3s ease;
+}
+@keyframes ear-pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Answer buttons */
+.ear-answers {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  justify-content: center;
+}
+.ear-answer-btn {
+  padding: 0.5em 1em; font-size: var(--fs-sm);
+  background: var(--bg-elevated); border: 1px solid var(--border-default);
+  border-radius: var(--radius-md); color: var(--text-primary);
+  cursor: pointer; transition: all var(--transition-fast);
+  min-width: 80px;
+}
+.ear-answer-btn:hover {
+  border-color: var(--accent-primary); background: var(--accent-subtle);
+}
+.ear-answer-btn.correct {
+  background: rgba(34, 197, 94, 0.2); border-color: #22c55e;
+  color: #22c55e;
+}
+.ear-answer-btn.wrong {
+  background: rgba(255, 107, 107, 0.2); border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+@media (max-width: 500px) {
+  .ear-stats { gap: var(--space-lg); }
+  .ear-answer-btn { min-width: 60px; font-size: var(--fs-xs); }
+}

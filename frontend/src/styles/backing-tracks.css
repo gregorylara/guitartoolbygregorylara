@@ -1,0 +1,104 @@
+/* ============================================
+   Backing Tracks — PRO Feature Styles
+   ============================================ */
+
+.bt-layout {
+  display: flex; flex-direction: column;
+  gap: var(--space-2xl); max-width: 800px;
+}
+
+.bt-style-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.bt-style-tab {
+  padding: 0.4em 1em; font-size: var(--fs-sm);
+  background: var(--bg-surface); border: 1px solid var(--border-default);
+  border-radius: var(--radius-full); color: var(--text-secondary);
+  cursor: pointer; transition: all var(--transition-fast);
+}
+.bt-style-tab.active {
+  background: var(--pro-subtle); color: var(--pro-primary);
+  border-color: var(--pro-primary);
+}
+
+.bt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-lg);
+}
+
+.bt-card {
+  display: flex; flex-direction: column; gap: var(--space-md);
+  padding: var(--space-xl);
+  background: var(--bg-elevated); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition-fast);
+}
+.bt-card:hover { border-color: var(--pro-primary); }
+
+.bt-card__header {
+  display: flex; justify-content: space-between;
+  align-items: baseline;
+}
+.bt-card__header h3 {
+  font-size: var(--fs-md); font-weight: var(--fw-bold);
+  color: var(--text-primary);
+}
+.bt-card__meta {
+  font-size: var(--fs-xs); color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.bt-card__prog {
+  display: flex; flex-wrap: wrap; gap: 4px;
+}
+.bt-prog-pill {
+  padding: 0.25em 0.6em; font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  background: var(--bg-surface); border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm); color: var(--text-secondary);
+  transition: all 0.15s;
+}
+.bt-prog-pill.active {
+  background: var(--pro-gradient); color: #fff;
+  border-color: transparent; transform: scale(1.1);
+}
+
+.bt-card__scale {
+  font-size: var(--fs-xs); color: var(--text-secondary);
+}
+.bt-card__scale-label {
+  color: var(--text-muted);
+}
+.bt-card__scale-name {
+  font-weight: var(--fw-semibold); color: var(--pro-primary);
+}
+
+.bt-card__controls {
+  display: flex; align-items: center; gap: var(--space-md); margin-top: auto;
+}
+.bt-play-btn {
+  width: 40px; height: 40px; font-size: var(--fs-lg);
+  background: var(--pro-gradient); border: none;
+  border-radius: 50%; color: #fff; cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex; align-items: center; justify-content: center;
+}
+.bt-play-btn:hover { opacity: 0.85; transform: scale(1.05); }
+
+.bt-loop-btn {
+  padding: 0.3em 0.6em; font-size: var(--fs-sm);
+  background: none; border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm); cursor: pointer;
+  color: var(--text-muted); transition: all var(--transition-fast);
+}
+.bt-loop-btn.active {
+  color: var(--pro-primary); border-color: var(--pro-primary);
+}
+
+.bt-vol {
+  flex: 1; max-width: 100px;
+  accent-color: var(--pro-primary);
+}
+
+@media (max-width: 500px) {
+  .bt-grid { grid-template-columns: 1fr; }
+}

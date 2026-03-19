@@ -1,7 +1,8 @@
 /**
- * Metronome — Full-featured metronome powered by Web Audio API look-ahead scheduler.
- * Exports { render, onMount, onDestroy } for the Router lifecycle.
+ * Metronome — Web Audio API metronome. i18n-aware.
  */
+import { t } from '../lib/i18n.js';
+
 
 // ── BPM Presets ────────────────────────────────────────────────────────────────
 const DEFAULT_BPM = 76; // Andante
@@ -28,11 +29,12 @@ const TIME_SIGS = [
   { label: '7/8', beats: 7 },
 ];
 
+// Subdivisions use translation keys
 const SUBDIVISIONS = [
-  { label: '♩ Negra',       value: 1   },
-  { label: '♪ Corchea',     value: 2   },
-  { label: '♪³ Tresillo',   value: 3   },
-  { label: '♬ Semicorchea', value: 4   },
+  { labelKey: 'metro.subdiv.quarter',   value: 1 },
+  { labelKey: 'metro.subdiv.eighth',    value: 2 },
+  { labelKey: 'metro.subdiv.triplet',   value: 3 },
+  { labelKey: 'metro.subdiv.sixteenth', value: 4 },
 ];
 
 // ── HTML Template ──────────────────────────────────────────────────────────────
@@ -52,7 +54,7 @@ export function render() {
 
   const subdivBtns = SUBDIVISIONS.map((s, i) => `
     <button class="metro-chip${i === 0 ? ' active' : ''}" data-subdiv="${s.value}">
-      ${s.label}
+      ${t(s.labelKey)}
     </button>
   `).join('');
 
@@ -63,10 +65,8 @@ export function render() {
 
   return `
     <div class="page-header">
-      <h1 class="page-header__title">Metrónomo</h1>
-      <p class="page-header__desc">
-        Metrónomo de precisión con Web Audio API. Pulsa <kbd>Espacio</kbd> para iniciar / detener.
-      </p>
+      <h1 class="page-header__title">${t('metro.title')}</h1>
+      <p class="page-header__desc">${t('metro.desc')}</p>
     </div>
 
     <div class="metro-layout">
@@ -115,7 +115,7 @@ export function render() {
 
       <!-- ── Time Signature ── -->
       <div class="metro-section">
-        <div class="metro-section__label">Compás</div>
+        <div class="metro-section__label">${t('metro.section.timesig')}</div>
         <div class="metro-chip-row" id="metroTimeSig">
           ${timeSigBtns}
         </div>
@@ -123,7 +123,7 @@ export function render() {
 
       <!-- ── Subdivision ── -->
       <div class="metro-section">
-        <div class="metro-section__label">Subdivisión</div>
+        <div class="metro-section__label">${t('metro.section.subdiv')}</div>
         <div class="metro-chip-row" id="metroSubdiv">
           ${subdivBtns}
         </div>
@@ -131,7 +131,7 @@ export function render() {
 
       <!-- ── BPM Presets ── -->
       <div class="metro-section">
-        <div class="metro-section__label">Velocidades de práctica</div>
+        <div class="metro-section__label">${t('metro.section.presets')}</div>
         <div class="metro-presets-grid" id="metroPresets">
           ${presetPills}
         </div>

@@ -133,7 +133,7 @@ function render() {
           </div>
 
           <div class="tuner-state" id="tuner-state" data-state="listening">
-            <span id="tuner-state-text">🔊 Escuchando…</span>
+            <i class="bi bi-volume-up"></i> Escuchando…
           </div>
 
           <div class="tuner-panel">
@@ -164,10 +164,10 @@ function render() {
           <div class="tuner-panel">
             <div class="tuner-panel__label">Tips de afinación</div>
             <div class="tuner-tips">
-              <div class="tuner-tips__item">🎯 Toca la cuerda con fuerza y espera a que estabilice</div>
-              <div class="tuner-tips__item">🔇 Afina en un lugar silencioso para mejor precisión</div>
-              <div class="tuner-tips__item">🔄 Si la cuerda está muy desafinada, gira la clavija lentamente</div>
-              <div class="tuner-tips__item">✅ Mantén la nota afinada 1.5s para confirmar</div>
+              <div class="tuner-tips__item"><i class="bi bi-bullseye"></i> Toca la cuerda con fuerza y espera a que estabilice</div>
+              <div class="tuner-tips__item"><i class="bi bi-volume-mute-fill"></i> Afina en un lugar silencioso para mejor precisión</div>
+              <div class="tuner-tips__item"><i class="bi bi-arrow-repeat"></i> Si la cuerda está muy desafinada, gira la clavija lentamente</div>
+              <div class="tuner-tips__item"><i class="bi bi-check-circle-fill"></i> Mantén la nota afinada 1.5s para confirmar</div>
             </div>
           </div>
         </div>
@@ -177,15 +177,15 @@ function render() {
     <!-- Phase: Complete Modal -->
     <div class="tuner-modal-overlay hidden" id="phase-complete">
       <div class="tuner-modal">
-        <div class="tuner-modal__icon">🎉</div>
+        <div class="tuner-modal__icon"><i class="bi bi-stars"></i></div>
         <h2 class="tuner-modal__title">¡Guitarra Afinada!</h2>
         <p class="tuner-modal__desc">
           Tu guitarra está perfectamente afinada en <strong id="modal-tuning-name">Estándar</strong>.
         </p>
-        <p class="tuner-modal__sub">¡Ahora a tocar! 🎸</p>
+        <p class="tuner-modal__sub">¡Ahora a tocar! <i class="bi bi-music-note-beamed"></i></p>
 
         <div class="tuner-modal__actions">
-          <button class="btn btn-primary" id="modal-tune-again">🔄 Afinar de nuevo</button>
+          <button class="btn btn-primary" id="modal-tune-again"><i class="bi bi-arrow-repeat"></i> Afinar de nuevo</button>
           <button class="tuner-share-btn tuner-share-btn--lg" id="modal-share">
             ${whatsappIcon}
             <span>Compartir en WhatsApp</span>
@@ -208,10 +208,10 @@ function renderStringButtons(container) {
     let icon = '';
     if (tunedStrings[i]) {
       stateClass = 'tuned';
-      icon = '✓';
+      icon = '<i class="bi bi-check2"></i>';
     } else if (i === currentStringIdx) {
       stateClass = 'current';
-      icon = '♪';
+      icon = '<i class="bi bi-music-note"></i>';
     }
     return `
       <div class="tuner-string-step ${stateClass}">
@@ -270,7 +270,7 @@ function onMount(container) {
       setupWaveformCanvas(container);
       startGuidedLoop(container);
     } catch {
-      updateState(container, 'idle', '⚠ Acceso al micrófono denegado');
+      updateState(container, 'idle', '<i class="bi bi-exclamation-triangle"></i> Acceso al micrófono denegado');
     }
   });
 
@@ -387,7 +387,7 @@ function startGuidedLoop(container) {
 
       if (matchesTarget && absCents <= 5) {
         state = 'in-tune';
-        msg = '✓ ¡Afinada!';
+        msg = '<i class="bi bi-check2"></i> ¡Afinada!';
 
         // Hold timer
         if (!inTuneStartTime) {
@@ -412,22 +412,22 @@ function startGuidedLoop(container) {
         inTuneStartTime = null;
         if (noteInfo.cents < 0) {
           state = 'flat';
-          msg = '↑ Sube el tono';
+          msg = '<i class="bi bi-arrow-up"></i> Sube el tono';
         } else {
           state = 'sharp';
-          msg = '↓ Baja el tono';
+          msg = '<i class="bi bi-arrow-down"></i> Baja el tono';
         }
       } else {
         inTuneStartTime = null;
         state = 'listening';
-        msg = `🎯 Toca la cuerda ${targetString.label} (${targetString.note}${targetString.octave})`;
+        msg = `<i class="bi bi-bullseye"></i> Toca la cuerda ${targetString.label} (${targetString.note}${targetString.octave})`;
       }
 
       updateState(container, state, msg);
       updateGauge(container, matchesTarget ? noteInfo.cents : 0, matchesTarget ? state : 'idle');
     } else {
       inTuneStartTime = null;
-      updateState(container, 'listening', '🔊 Escuchando…');
+      updateState(container, 'listening', '<i class="bi bi-volume-up"></i> Escuchando…');
     }
 
     drawWaveform(container);
@@ -464,8 +464,7 @@ function updateState(container, state, text) {
   const el = container?.querySelector('#tuner-state');
   if (el) {
     el.dataset.state = state;
-    const textEl = el.querySelector('#tuner-state-text');
-    if (textEl) textEl.textContent = text;
+    el.innerHTML = text;
   }
 }
 

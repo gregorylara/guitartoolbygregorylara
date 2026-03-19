@@ -264,6 +264,11 @@
   font-size: var(--fs-sm);
   font-weight: var(--fw-semibold);
   transition: all var(--transition-base);
+  min-height: 32px;
+}
+
+.tuner-state i {
+  font-size: 1.2em;
 }
 
 .tuner-state[data-state="idle"] { background: var(--bg-surface); color: var(--text-muted); }
@@ -319,6 +324,10 @@
   color: var(--text-muted);
   background: var(--bg-surface);
   flex-shrink: 0;
+}
+
+.tuner-string-step__num i {
+  font-size: 1rem;
 }
 
 .tuner-string-step__note {
@@ -385,12 +394,21 @@
 }
 
 .tuner-tips__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
   font-size: var(--fs-xs);
   color: var(--text-muted);
   line-height: 1.4;
   padding: var(--space-xs) var(--space-sm);
   background: var(--bg-surface);
   border-radius: var(--radius-sm);
+}
+
+.tuner-tips__item i {
+  color: var(--text-accent);
+  font-size: 1.1em;
+  flex-shrink: 0;
 }
 
 /* ── WhatsApp Share Button ── */

@@ -1,0 +1,134 @@
+/* ============================================
+   Progressions — PRO Feature Styles
+   ============================================ */
+
+.prog-layout {
+  display: flex; flex-direction: column;
+  gap: var(--space-2xl); max-width: 800px;
+}
+
+/* Controls */
+.prog-controls {
+  display: flex; flex-wrap: wrap; gap: var(--space-xl);
+  padding: var(--space-xl);
+  background: var(--bg-elevated); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+.prog-control-group {
+  display: flex; flex-direction: column; gap: var(--space-sm);
+}
+.prog-control-group label {
+  font-size: var(--fs-xs); font-weight: var(--fw-medium);
+  color: var(--text-secondary); text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.prog-key-grid {
+  display: flex; flex-wrap: wrap; gap: 4px;
+}
+.prog-key-btn {
+  width: 36px; height: 32px;
+  font-size: var(--fs-xs); font-weight: var(--fw-semibold);
+  background: var(--bg-surface); border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm); color: var(--text-secondary);
+  cursor: pointer; transition: all var(--transition-fast);
+}
+.prog-key-btn:hover { border-color: var(--pro-primary); }
+.prog-key-btn.active {
+  background: var(--pro-gradient); color: #fff;
+  border-color: transparent;
+}
+
+.prog-mode-row { display: flex; gap: 4px; }
+.prog-mode-btn {
+  padding: 0.4em 1em; font-size: var(--fs-xs);
+  background: var(--bg-surface); border: 1px solid var(--border-default);
+  border-radius: var(--radius-full); color: var(--text-secondary);
+  cursor: pointer; transition: all var(--transition-fast);
+}
+.prog-mode-btn.active {
+  background: var(--pro-gradient); color: #fff;
+  border-color: transparent;
+}
+
+/* Style tabs */
+.prog-style-row {
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.prog-style-tab {
+  padding: 0.35em 0.9em; font-size: var(--fs-xs);
+  background: var(--bg-surface); border: 1px solid var(--border-default);
+  border-radius: var(--radius-full); color: var(--text-secondary);
+  cursor: pointer; transition: all var(--transition-fast);
+}
+.prog-style-tab.active {
+  background: var(--pro-subtle); color: var(--pro-primary);
+  border-color: var(--pro-primary);
+}
+
+/* Progression grid */
+.prog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-lg);
+}
+
+.prog-card {
+  display: flex; flex-direction: column; gap: var(--space-md);
+  padding: var(--space-xl);
+  background: var(--bg-elevated); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition-fast);
+}
+.prog-card:hover { border-color: var(--pro-primary); }
+
+.prog-card__header {
+  display: flex; justify-content: space-between;
+  align-items: baseline; gap: var(--space-sm);
+}
+.prog-card__title {
+  font-size: var(--fs-md); font-weight: var(--fw-bold);
+  color: var(--text-primary);
+}
+.prog-card__roman {
+  font-size: var(--fs-xs); color: var(--text-muted);
+  white-space: nowrap;
+}
+.prog-card__desc {
+  font-size: var(--fs-xs); color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.prog-card__chords {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.prog-chord-pill {
+  padding: 0.3em 0.7em; font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  background: var(--bg-surface); border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm); color: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+.prog-chord-pill.playing {
+  background: var(--pro-gradient); color: #fff;
+  border-color: transparent; transform: scale(1.08);
+}
+
+.prog-card__actions {
+  display: flex; gap: var(--space-md); margin-top: auto;
+}
+.prog-play-btn, .prog-practice-btn {
+  padding: 0.4em 0.9em; font-size: var(--fs-xs);
+  background: none; border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm); color: var(--text-secondary);
+  cursor: pointer; text-decoration: none;
+  transition: all var(--transition-fast);
+}
+.prog-play-btn:hover { border-color: var(--pro-primary); color: var(--pro-primary); }
+.prog-practice-btn:hover { border-color: var(--pro-primary); color: var(--pro-primary); }
+
+@media (max-width: 500px) {
+  .prog-grid { grid-template-columns: 1fr; }
+  .prog-key-grid { gap: 3px; }
+  .prog-key-btn { width: 30px; height: 28px; font-size: 10px; }
+}

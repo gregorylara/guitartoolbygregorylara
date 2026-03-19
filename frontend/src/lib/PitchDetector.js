@@ -19,7 +19,7 @@ export const TUNING_PRESETS = {
   standard: {
     name: 'Estándar',
     desc: 'E A D G B E',
-    icon: '🎸',
+    icon: '<i class="bi bi-vinyl-fill"></i>',
     strings: [
       { name: 'E2', note: 'E', octave: 2, freq: 82.41, label: '6ª' },
       { name: 'A2', note: 'A', octave: 2, freq: 110.00, label: '5ª' },
@@ -32,7 +32,7 @@ export const TUNING_PRESETS = {
   dropD: {
     name: 'Drop D',
     desc: 'D A D G B E',
-    icon: '🔥',
+    icon: '<i class="bi bi-fire"></i>',
     strings: [
       { name: 'D2', note: 'D', octave: 2, freq: 73.42, label: '6ª' },
       { name: 'A2', note: 'A', octave: 2, freq: 110.00, label: '5ª' },
@@ -45,7 +45,7 @@ export const TUNING_PRESETS = {
   halfStepDown: {
     name: 'Medio Tono Abajo',
     desc: 'Eb Ab Db Gb Bb Eb',
-    icon: '⬇️',
+    icon: '<i class="bi bi-arrow-down-circle"></i>',
     strings: [
       { name: 'Eb2', note: 'D#', octave: 2, freq: 77.78, label: '6ª' },
       { name: 'Ab2', note: 'G#', octave: 2, freq: 103.83, label: '5ª' },
@@ -58,7 +58,7 @@ export const TUNING_PRESETS = {
   openG: {
     name: 'Open G',
     desc: 'D G D G B D',
-    icon: '🎶',
+    icon: '<i class="bi bi-music-note-beamed"></i>',
     strings: [
       { name: 'D2', note: 'D', octave: 2, freq: 73.42, label: '6ª' },
       { name: 'G2', note: 'G', octave: 2, freq: 98.00, label: '5ª' },

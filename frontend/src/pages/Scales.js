@@ -1,7 +1,8 @@
 /**
- * Scales — Scale Explorer with explanations, SVG fretboard patterns,
- * and sections organized by musical style.
+ * Scales — Scale Explorer. i18n-aware.
  */
+import { t } from '../lib/i18n.js';
+
 
 // ── Scale Data ─────────────────────────────────────────────────────────────────
 // intervals: semitones from root, shown relative (R=root, 2=step, etc.)
@@ -16,6 +17,7 @@ const SCALE_CATEGORIES = [
     description: 'Las escalas fundamentales son la base de toda la música occidental. Dominarlas te da acceso a la mayoría de canciones populares, rock y pop.',
     scales: [
       {
+        id: 'major',
         name: 'Mayor (Jónica)',
         intervals: 'R – 2 – 3 – 4 – 5 – 6 – 7',
         formula: 'T T S T T T S',
@@ -44,6 +46,7 @@ const SCALE_CATEGORIES = [
         ],
       },
       {
+        id: 'minor',
         name: 'Menor Natural (Eólica)',
         intervals: 'R – 2 – ♭3 – 4 – 5 – ♭6 – ♭7',
         formula: 'T S T T S T T',
@@ -67,6 +70,7 @@ const SCALE_CATEGORIES = [
         ],
       },
       {
+        id: 'pent',
         name: 'Pentatónica Mayor',
         intervals: 'R – 2 – 3 – 5 – 6',
         formula: 'T T MT S MT',
@@ -98,6 +102,7 @@ const SCALE_CATEGORIES = [
     description: 'Las escalas de blues son la esencia del rock, soul y R&B. Se derivan de la pentatónica pero con "blue notes" que añaden tensión y expresividad característica.',
     scales: [
       {
+        id: 'minpent',
         name: 'Pentatónica Menor',
         intervals: 'R – ♭3 – 4 – 5 – ♭7',
         formula: 'MT T T MT T',
@@ -121,6 +126,7 @@ const SCALE_CATEGORIES = [
         ],
       },
       {
+        id: 'hex',
         name: 'Blues (Hexatónica)',
         intervals: 'R – ♭3 – 4 – ♭5 – 5 – ♭7',
         formula: 'MT T S S MT T',
@@ -144,6 +150,7 @@ const SCALE_CATEGORIES = [
         ],
       },
       {
+        id: 'maj',
         name: 'Mayor de Blues',
         intervals: 'R – 2 – ♭3 – 3 – 5 – 6',
         formula: 'T S S MT T MT',
@@ -175,6 +182,7 @@ const SCALE_CATEGORIES = [
     description: 'Las escalas de jazz añaden tensiones y colores más sofisticados. Requieren más práctica pero abren un mundo de posibilidades armónicas. Usadas en jazz, fusion y R&B moderno.',
     scales: [
       {
+        id: 'melmin',
         name: 'Menor Melódica',
         intervals: 'R – 2 – ♭3 – 4 – 5 – 6 – 7',
         formula: 'T S T T T T S',
@@ -198,6 +206,7 @@ const SCALE_CATEGORIES = [
         ],
       },
       {
+        id: 'mixo',
         name: 'Dominante Mixolidia',
         intervals: 'R – 2 – 3 – 4 – 5 – 6 – ♭7',
         formula: 'T T S T T S T',
@@ -221,6 +230,7 @@ const SCALE_CATEGORIES = [
         ],
       },
       {
+        id: 'dim',
         name: 'Disminuida (Semi-Tono/Tono)',
         intervals: 'R – ♭2 – ♭3 – 3 – ♭5 – 5 – 6 – ♭7',
         formula: 'S T S T S T S T',
@@ -252,6 +262,7 @@ const SCALE_CATEGORIES = [
     description: 'Los 7 modos griegos son rotaciones de la escala mayor. Cada modo tiene un carácter sonoro distinto. Dominarlos te da un vocabulario enorme para cualquier estilo musical.',
     scales: [
       {
+        id: 'dorian',
         name: 'Dórico',
         intervals: 'R – 2 – ♭3 – 4 – 5 – 6 – ♭7',
         formula: 'T S T T T S T',
@@ -275,6 +286,7 @@ const SCALE_CATEGORIES = [
         ],
       },
       {
+        id: 'phrygian',
         name: 'Frigio',
         intervals: 'R – ♭2 – ♭3 – 4 – 5 – ♭6 – ♭7',
         formula: 'S T T T S T T',
@@ -298,6 +310,7 @@ const SCALE_CATEGORIES = [
         ],
       },
       {
+        id: 'lydian',
         name: 'Lidio',
         intervals: 'R – 2 – 3 – ♯4 – 5 – 6 – 7',
         formula: 'T T T S T T S',
@@ -329,6 +342,7 @@ const SCALE_CATEGORIES = [
     description: 'Escalas de distintas tradiciones musicales del mundo. Añaden colorido y carácter único a tu música, muy usadas en flamenco, música árabe, japonesa y étnica.',
     scales: [
       {
+        id: 'phrygdom',
         name: 'Frigio Dominante (Español)',
         intervals: 'R – ♭2 – 3 – 4 – 5 – ♭6 – ♭7',
         formula: 'S MT S T S T T',
@@ -352,6 +366,7 @@ const SCALE_CATEGORIES = [
         ],
       },
       {
+        id: 'japin',
         name: 'Pentatónica Japonesa (In)',
         intervals: 'R – ♭2 – 4 – 5 – ♭6',
         formula: 'S MT T S MT',
@@ -375,6 +390,7 @@ const SCALE_CATEGORIES = [
         ],
       },
       {
+        id: 'hungmin',
         name: 'Húngara Menor',
         intervals: 'R – 2 – ♭3 – ♯4 – 5 – ♭6 – 7',
         formula: 'T S MT S S MT S',
@@ -467,29 +483,37 @@ function buildFretboardSVG(pos, color) {
   return svg;
 }
 
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function getCatLabel(id) {
+  const icons = { fundamental: 'music-note', blues: 'vinyl-fill', jazz: 'music-note-list', modal: 'soundwave', world: 'globe' };
+  return `<i class="bi bi-${icons[id] || 'circle'}"></i> ${t('scales.cat.' + id)}`;
+}
+
 // ── Scale Card ────────────────────────────────────────────────────────────────
-function scaleCard(scale) {
+function scaleCard(scale, catId) {
   const pos = scale.positions[0];
   const diagram = buildFretboardSVG(pos, scale.color);
+  const name = t(`scales.cat.${catId}.${scale.id}`) || scale.name;
+  const desc = t(`scales.cat.${catId}.${scale.id}.desc`) || scale.desc;
 
   return `
     <div class="scale-card" style="--scale-color: ${scale.color}">
       <div class="scale-card__header">
         <div>
-          <h3 class="scale-card__name">${scale.name}</h3>
+          <h3 class="scale-card__name">${name}</h3>
           <div class="scale-card__intervals">${scale.intervals}</div>
         </div>
         <div class="scale-card__tags">
           <span class="scale-tag">${scale.formula}</span>
         </div>
       </div>
-      <p class="scale-card__desc">${scale.desc}</p>
+      <p class="scale-card__desc">${desc}</p>
       <div class="scale-card__diagram">
-        <div class="scale-diagram-label">${pos.label} · Tónica: A (traste ${pos.root})</div>
+        <div class="scale-diagram-label">${pos.label} · ${t('scales.diagram.tonic')} ${pos.root})</div>
         ${diagram}
         <div class="scale-legend">
-          <span class="scale-legend__root">● Tónica (R)</span>
-          <span class="scale-legend__note">● Nota de escala</span>
+          <span class="scale-legend__root">● ${t('scales.legend.root').split('—')[0].trim()} (R)</span>
+          <span class="scale-legend__note">● ${t('scales.legend.note')}</span>
         </div>
       </div>
     </div>
@@ -498,12 +522,12 @@ function scaleCard(scale) {
 
 // ── Category Section ──────────────────────────────────────────────────────────
 function categorySection(cat) {
-  const cards = cat.scales.map(s => scaleCard(s)).join('');
+  const cards = cat.scales.map(s => scaleCard(s, cat.id)).join('');
   return `
     <section class="scale-section" id="cat-${cat.id}">
       <div class="scale-section__header">
-        <h2 class="scale-section__title">${cat.label}</h2>
-        <p class="scale-section__desc">${cat.description}</p>
+        <h2 class="scale-section__title">${getCatLabel(cat.id)}</h2>
+        <p class="scale-section__desc">${t('scales.cat.' + cat.id + '.desc')}</p>
       </div>
       <div class="scale-cards-grid">
         ${cards}
@@ -517,28 +541,21 @@ function introBlock() {
   return `
     <div class="scale-intro">
       <div class="scale-intro__text">
-        <h2 class="scale-intro__title">¿Qué es una escala?</h2>
-        <p>
-          Una <strong>escala</strong> es una selección ordenada de notas musicales dentro de una octava.
-          Cada escala tiene una "fórmula" de tonos (T) y semitonos (S) que define su carácter sonoro.
-        </p>
-        <p>
-          En la guitarra, las escalas se visualizan como <strong>patrones de puntos en el mástil</strong>.
-          El mismo patrón puede moverse arriba y abajo del mástil para cambiar la tonalidad
-          (transposición). Los diagramas de abajo muestran la <strong>Posición 1</strong> con tónica en La (A) en el traste 5.
-        </p>
+        <h2 class="scale-intro__title">${t('scales.intro.title')}</h2>
+        <p>${t('scales.intro.p1')}</p>
+        <p>${t('scales.intro.p2')}</p>
       </div>
       <div class="scale-intro__legend">
         <div class="scale-legend-item">
           <span class="scale-legend-dot root">R</span>
-          <span>Tónica — nota raíz de la escala</span>
+          <span>${t('scales.legend.root')}</span>
         </div>
         <div class="scale-legend-item">
           <span class="scale-legend-dot note"></span>
-          <span>Nota de la escala</span>
+          <span>${t('scales.legend.note')}</span>
         </div>
         <div class="scale-legend-item scale-legend-item--tip">
-          💡 El patrón es siempre el mismo — mueve la tónica y cambias la tonalidad.
+          ${t('scales.legend.tip')}
         </div>
       </div>
     </div>
@@ -548,7 +565,7 @@ function introBlock() {
 // ── Nav anchors ───────────────────────────────────────────────────────────────
 function categoryNav() {
   const links = SCALE_CATEGORIES.map(cat =>
-    `<a class="scale-nav-link" href="#cat-${cat.id}">${cat.label}</a>`
+    `<a class="scale-nav-link" href="#cat-${cat.id}">${getCatLabel(cat.id)}</a>`
   ).join('');
   return `<nav class="scale-nav">${links}</nav>`;
 }
@@ -559,10 +576,8 @@ export function ScalesPage() {
 
   return `
     <div class="page-header">
-      <h1 class="page-header__title">Scale Explorer</h1>
-      <p class="page-header__desc">
-        Escalas fundamentales para guitarra organizadas por estilo, con diagramas de mástil y explicaciones musicales.
-      </p>
+      <h1 class="page-header__title">${t('scales.title')}</h1>
+      <p class="page-header__desc">${t('scales.desc')}</p>
     </div>
 
     ${introBlock()}

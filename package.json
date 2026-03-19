@@ -1,14 +1,13 @@
 {
   "name": "guitartool",
+  "version": "1.0.0",
+  "description": "GuitarTool — monorepo with separate frontend and backend",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "vite": "^7.3.1"
+    "dev":            "cd frontend && npm run dev",
+    "build":          "cd frontend && npm run build",
+    "start:backend":  "cd backend && npm start",
+    "dev:backend":    "cd backend && npm run dev",
+    "install:all":    "cd frontend && npm install && cd ../backend && npm install"
   }
 }

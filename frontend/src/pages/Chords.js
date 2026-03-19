@@ -1,6 +1,8 @@
 /**
- * Chords — Interactive chord library with SVG fretboard diagrams.
+ * Chords — Interactive chord library with SVG fretboard diagrams. i18n-aware.
  */
+import { t } from '../lib/i18n.js';
+
 
 // ── Chord Data ────────────────────────────────────────────────────────────────
 // Each chord: { name, fullName, category, frets, fingers, barres, startFret, muted, open }
@@ -260,14 +262,14 @@ const CHORDS = [
 ];
 
 const CATEGORIES = [
-  { id: 'all',    label: 'Todos' },
-  { id: 'major',  label: 'Mayores' },
-  { id: 'minor',  label: 'Menores' },
-  { id: 'seventh',label: 'Dom. 7ª' },
-  { id: 'minor7', label: 'Men. 7ª' },
-  { id: 'maj7',   label: 'Maj. 7ª' },
-  { id: 'add',    label: 'Add 9' },
-  { id: 'sus',    label: 'Sus' },
+  { id: 'all',    labelKey: 'chords.cat.all' },
+  { id: 'major',  labelKey: 'chords.cat.major' },
+  { id: 'minor',  labelKey: 'chords.cat.minor' },
+  { id: 'seventh',labelKey: 'chords.cat.seventh' },
+  { id: 'minor7', labelKey: 'chords.cat.minor7' },
+  { id: 'maj7',   labelKey: 'chords.cat.maj7' },
+  { id: 'add',    labelKey: 'chords.cat.add' },
+  { id: 'sus',    labelKey: 'chords.cat.sus' },
 ];
 
 // ── SVG Diagram Renderer ───────────────────────────────────────────────────
@@ -362,17 +364,15 @@ function chordCard(chord) {
 export function ChordsPage() {
   const tabs = CATEGORIES.map(cat => `
     <button class="chord-tab${cat.id === 'all' ? ' active' : ''}"
-      data-cat="${cat.id}">${cat.label}</button>
+      data-cat="${cat.id}">${t(cat.labelKey)}</button>
   `).join('');
 
   const cards = CHORDS.map(c => chordCard(c)).join('');
 
   return `
     <div class="page-header">
-      <h1 class="page-header__title">Chord Library</h1>
-      <p class="page-header__desc">
-        Los acordes más usados en la guitarra. Filtrálos por tipo.
-      </p>
+      <h1 class="page-header__title">${t('chords.title')}</h1>
+      <p class="page-header__desc">${t('chords.desc')}</p>
     </div>
 
     <div class="chord-filters">

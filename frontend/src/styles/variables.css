@@ -20,6 +20,14 @@
   --accent-glow:      #0066ff40;
   --accent-gradient:  linear-gradient(135deg, #0044cc, #0088ff);
 
+  /* ── PRO Accents (Orange) ── */
+  --pro-primary:      #ff8800;
+  --pro-hover:        #ffa500;
+  --pro-light:        #ffcc33;
+  --pro-subtle:       #ff88001a;
+  --pro-glow:         #ff880040;
+  --pro-gradient:     linear-gradient(135deg, #ff6600, #ffaa00);
+
   /* ── Text ── */
   --text-primary:   #f0f0f5;
   --text-secondary: #8888a0;
